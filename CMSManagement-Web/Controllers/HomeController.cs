@@ -1,4 +1,5 @@
 ﻿using CMSManagement_Web.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,9 +19,26 @@ namespace CMSManagement_Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> sessionId()
+        {
+            try {
+                HttpContext.Session.SetInt32("IsAdmin",0);
+                var isAdmin = HttpContext.Session.GetInt32("IsAdmin");
+
+                return Ok(isAdmin);
+            }
+            catch(Exception e) { return BadRequest(e); }
+            
+        }
+
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Admin()
+        {
+            return View("~/Views/Admin/Index.cshtml");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
