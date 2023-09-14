@@ -24,5 +24,36 @@ namespace CMSManagement_API.Services
                 return null;
             }
         }
+
+        public Employee GetUserById(int id)
+        {
+            Employee employeeDetail = _employeeRepository.GetUserById(id);
+            return employeeDetail;
+        }
+
+
+        public IEnumerable<Employee> GetAllEmployee()
+        {
+            return _employeeRepository.GetAllEmployee();
+        }
+
+
+        public void SaveEmployeeDetail(Employee employee)
+        {
+            _employeeRepository.SaveEmployeeDetail(employee);
+        }
+
+
+        public void UpdateEmployeeDetail(Employee employee)
+        {
+            _employeeRepository.UpdateEmployeeDetail(employee);
+        }
+
+        public bool DeleteEmployeeDetail(int Id)
+        {
+            bool deleted = _employeeRepository.DeleteEmployeeDetail(Id);
+            return deleted;
+        }
+
     }
 }

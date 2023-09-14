@@ -42,15 +42,15 @@ namespace CMSManagement_Web.Controllers
                     {
                         string responseAsString = response.Content.ReadAsStringAsync().Result;
 
-                        //JObject json= JObject.Parse(responseAsString);
-                        //int id = (int)json["id"];
-                        //int role = (int)json["role"];
-                        //string token = (string)json["token"];
+                        JObject json = JObject.Parse(responseAsString);
+                        int id = (int)json["id"];
+                        int role = (int)json["role"];
+                        string token = (string)json["token"];
 
-                        HttpContext.Session.SetString("Id", responseAsString);
-
-                        //HttpContext.Session.SetString("Role", role.ToString());
-                        //HttpContext.Session.SetString("Token", token);
+                        //HttpContext.Session.SetString("Id", responseAsString);
+                        HttpContext.Session.SetString("Id", id.ToString());
+                        HttpContext.Session.SetString("Role", role.ToString());
+                        HttpContext.Session.SetString("Token", token);
 
 
                         return Ok(responseAsString);
@@ -62,6 +62,12 @@ namespace CMSManagement_Web.Controllers
                 }
             }
             return Ok(null);
+        }
+
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
     }
 }

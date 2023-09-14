@@ -1,0 +1,91 @@
+﻿@model CMSManagement_Web.Models.Employee
+
+@{
+    ViewData["Title"] = "EmployeeUpdate";
+}
+
+<h1>EmployeeUpdate</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EmployeeUpdate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Firstname" class="control-label"></label>
+                <input asp-for="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname" class="control-label"></label>
+                <input asp-for="Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                @*<input asp-for="Gender" class="form-control" />*@
+                <div class="col-md-10">
+                    <input asp-for="Gender"
+                           id="Gender"
+                           name="Gender"
+                           type="radio"
+                           value="1" />Male
+
+                    <input asp-for="Gender" id="Gender"
+                           name="Gender"
+                           type="radio"
+                           value="0" />Female
+                </div>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobile_No" class="control-label"></label>
+                <input asp-for="Mobile_No" class="form-control" />
+                <span asp-validation-for="Mobile_No" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthdate" class="control-label"></label>
+                <input type="date" asp-for="Birthdate" class="form-control" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                @*<input asp-for="Role" class="form-control" />
+                <span asp-validation-for="Role" class="text-danger"></span>*@
+                <select class="form-select" id="ddRole" asp-for="Role" name="Role" onchange="SelectedChange()">
+                    <option value="-1" selected>Select Role</option>
+                    <option value="1" asp-for="Role">Administrator</option>
+                    <option value="0" asp-for="Role">Employee</option>
+                </select>
+                <span id="error-message" class="text-danger" style="display:none">The Role field is required.</span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

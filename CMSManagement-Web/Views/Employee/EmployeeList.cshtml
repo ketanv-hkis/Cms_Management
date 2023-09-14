@@ -1,0 +1,130 @@
+﻿@model IEnumerable<CMSManagement_Web.Models.Employee>
+
+@{
+    ViewData["Title"] = "EmployeeList";
+}
+
+
+<h1>EmployeeList</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile_No)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Is_status)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Is_delete)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Created_by)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Created_date)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Modified_by)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Modified_date)
+            </th>*@
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @if (item.Gender == 1)
+                    {
+                        <span>Male</span>
+                    }
+                    else
+                    {
+                        <span>Female</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile_No)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Birthdate)
+                </td>
+                <td>
+                    @if (item.Role == 1)
+                    {
+                        <span>Administrator</span>
+                    }
+                    else
+                    {
+                        <span>Employee</span>
+                    }
+                    @*@Html.DisplayFor(modelItem => item.Role)*@
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Is_status)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Is_delete)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Created_by)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Created_date)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Modified_by)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Modified_date)
+            </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "EmployeeUpdate", new {  id=item.Id  }) |
+                    @Html.ActionLink("Details", "EmployeeDetails", new {  id=item.Id  }) |
+                    @Html.ActionLink("Delete", "EmployeeDelete", new {  id=item.Id  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CMSManagement_Web.styles.css" asp-append-version="true" />
     <script src="~/js/employee.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
 </head>
 <body>
     <header>
@@ -28,6 +34,7 @@
                         </li>
                     </ul>
                 </div>
+                <a class="nav-link fa fa-user fw-bold" asp-area="" asp-controller="Home" asp-action="Login"></a>
             </div>
         </nav>
     </header>
@@ -37,7 +44,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
             &copy; 2023 - CMSManagement_Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

@@ -10,7 +10,7 @@
             success: function (result) {
                 if (result != undefined) {
                     alert("login successfully");
-                    window.location.href = "/Home/Index";
+                    window.location.href = "/Employee/EmployeeAdd";
                 } else {
                     alert("login Failed");
                 }
@@ -19,5 +19,16 @@
     }
     else {
         alert("Please enter email and password");
+    }
+}
+
+
+function SelectedChange() {
+    var selectedRole = document.getElementById('ddRole').value;
+    if (selectedRole == -1) {
+        document.getElementById('error-message').style.display = "block";
+    }
+    else {
+        document.getElementById('error-message').style.display = "none";
     }
 }

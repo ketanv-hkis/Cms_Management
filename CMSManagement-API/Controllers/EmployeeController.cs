@@ -1,8 +1,11 @@
 ﻿using CMSManagement_API.Models;
 using CMSManagement_API.Services;
+using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -65,6 +68,108 @@ namespace CMSManagement_API.Controllers
             }
 
         }
+
+        [HttpGet]
+        public IActionResult GetAllEmployee()
+        {
+            try
+            {
+                var list = _employeeService.GetAllEmployee();
+
+                foreach(var item in list)
+                {
+                    string base64EncodedPassword = item.Password;
+                    byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
+                    string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
+                    item.Password = decodedPassword;
+                }
+                
+                return Ok(list);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult GetUserById(int id)
+        {
+            try
+            {
+                var list = _employeeService.GetUserById(id);
+
+                string base64EncodedPassword = list.Password;
+                byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
+                string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
+                list.Password = decodedPassword;
+
+                return Ok(list);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> SaveEmployee(Employee employee)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                _employeeService.SaveEmployeeDetail(employee);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateEmployee(Employee employee)
+        {
+            try
+            {
+                _employeeService.UpdateEmployeeDetail(employee);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            try
+            {
+                if (id != 0)
+                {
+                    bool deleted = _employeeService.DeleteEmployeeDetail(id);
+                    return Ok(deleted);
+                }
+                else 
+                { 
+                    return BadRequest(false); 
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
 
         private string GenerateJSONWebToken(Login login)
         {

@@ -1,4 +1,6 @@
-﻿namespace CMSManagement_Web.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CMSManagement_Web.Models
 {
     public class Employee
     {
@@ -8,7 +10,9 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public int Gender { get; set; }
+        [MaxLength(10)]
         public string Mobile_No { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
         public int Role { get; set; }
         public int Is_status { get; set; }
