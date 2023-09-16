@@ -15,30 +15,26 @@ using System.Text;
 
 namespace CMSManagement_Web.Controllers
 {
+    [Authentication]
     public class EmployeeController : Controller
     {
-        HttpClient client = new HttpClient();
+        private readonly Initial _initial;
 
+        public EmployeeController(Initial initial)
+        {
+            _initial = initial;
+        }
 
         public IActionResult EmployeeList()
         {
             try
             {
-                string token = HttpContext.Session.GetString("Token");
-
-                client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-                //var response = client.PostAsJsonAsync<Employee>("SaveEmployee", employee).Result;
-
-                var request = new HttpRequestMessage(HttpMethod.Get, "GetAllEmployee");
-
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+                HttpClient _client = _initial.HttpClients();
+                HttpResponseMessage response = _client.GetAsync("Employee/GetAllEmployee").Result;
 
                 if (response.IsSuccessStatusCode)
                 {
                     string responseAsString = response.Content.ReadAsStringAsync().Result;
-
                     List<Employee> data = JsonConvert.DeserializeObject<List<Employee>>(responseAsString);
                     return View(data);
                 }
@@ -50,31 +46,21 @@ namespace CMSManagement_Web.Controllers
             return View();
         }
 
-        [AllowAnonymous]
+
         public IActionResult EmployeeAdd()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> EmployeeAdd(Employee employee)
+        public IActionResult EmployeeAdd(Employee employee)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    string token = HttpContext.Session.GetString("Token");
-
-                    client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-                    //var response = client.PostAsJsonAsync<Employee>("SaveEmployee", employee).Result;
-
-                    var request = new HttpRequestMessage(HttpMethod.Post, "SaveEmployee");
-
-                    request.Content = new ObjectContent<Employee>(employee, new JsonMediaTypeFormatter());
-
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                    HttpResponseMessage response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                    HttpClient _client = _initial.HttpClients();
+                    HttpResponseMessage response = _client.PostAsJsonAsync<Employee>("Employee/SaveEmployee", employee).Result;
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -95,21 +81,12 @@ namespace CMSManagement_Web.Controllers
         {
             try
             {
-                string token = HttpContext.Session.GetString("Token");
-
-                client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-                //var response = client.PostAsJsonAsync<Employee>("SaveEmployee", employee).Result;
-
-                var request = new HttpRequestMessage(HttpMethod.Get, "GetUserById?id=" + id);
-
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+                HttpClient _client = _initial.HttpClients();
+                HttpResponseMessage response = _client.GetAsync("Employee/GetUserById?id=" + id).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
                     string responseAsString = response.Content.ReadAsStringAsync().Result;
-
                     Employee data = JsonConvert.DeserializeObject<Employee>(responseAsString);
                     return View(data);
                 }
@@ -130,18 +107,8 @@ namespace CMSManagement_Web.Controllers
                 {
                     string Modifiedby = HttpContext.Session.GetString("Id");
                     employees.Modified_by = Convert.ToInt32(Modifiedby);
-
-                    string token = HttpContext.Session.GetString("Token");
-
-                    client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-
-                    var request = new HttpRequestMessage(HttpMethod.Post, "UpdateEmployee");
-
-                    request.Content = new ObjectContent<Employee>(employees, new JsonMediaTypeFormatter());
-
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                    HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+                    HttpClient _client = _initial.HttpClients();
+                    HttpResponseMessage response = _client.PostAsJsonAsync<Employee>("Employee/UpdateEmployee", employees).Result;
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -156,39 +123,6 @@ namespace CMSManagement_Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-        [HttpGet]
-        public IActionResult EmployeeDelete(int ID)
-        {
-            try
-            {
-                string token = HttpContext.Session.GetString("Token");
-
-                client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-                //var response = client.PostAsJsonAsync<Employee>("SaveEmployee", employee).Result;
-
-                var request = new HttpRequestMessage(HttpMethod.Get, "GetUserById?id=" + ID);
-
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseAsString = response.Content.ReadAsStringAsync().Result;
-
-                    Employee data = JsonConvert.DeserializeObject<Employee>(responseAsString);
-                    return View(data);
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            return View();
-        }
-
 
         [HttpPost]
         public IActionResult EmployeeDelete(int? Id)
@@ -197,20 +131,13 @@ namespace CMSManagement_Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    string token = HttpContext.Session.GetString("Token");
-
-                    client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-
-                    var request = new HttpRequestMessage(HttpMethod.Delete, "DeleteEmployee?id=" + Id);
-
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                    HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+                    HttpClient _client = _initial.HttpClients();
+                    HttpResponseMessage response = _client.DeleteAsync("Employee/DeleteEmployee?id=" + Id).Result;
 
                     if (response.IsSuccessStatusCode)
                     {
                         string responseAsString = response.Content.ReadAsStringAsync().Result;
-                        return View();
+                        return Json("success");
                     }
                 }
                 return Ok(null);
@@ -220,6 +147,5 @@ namespace CMSManagement_Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

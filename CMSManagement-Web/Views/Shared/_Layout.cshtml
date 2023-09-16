@@ -34,7 +34,15 @@
                         </li>
                     </ul>
                 </div>
-                <a class="nav-link fa fa-user fw-bold" asp-area="" asp-controller="Home" asp-action="Login"></a>
+               
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item ms-auto hide" id="logoutButton">
+                        <a class="nav-link text-dark fw-bold" id="logoutButton" asp-area="" asp-controller="Home" asp-action="Logout" title="Logout"><i class="fa fa-power-off"></i></a>
+                    </li>
+                    <li class="nav-item ms-auto" id="loginButton">
+                        <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Home" asp-action="Login" title="Login"><i class="fa fa-user"></i></a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -49,9 +57,32 @@
             &copy; 2023 - CMSManagement_Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "Get",
+                url: "/Home/Authentication",
+                success: function (response) {
+                    if (response != null) {
+                        $('#loginButton').addClass('hide');
+                        $('#logoutButton').removeClass('hide');
+                    } else {
+                        $('#logoutButton').addClass('hide');
+                        $('#loginButton').removeClass('hide');
+                    }
+                }
+            });
+        });
+    </script>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

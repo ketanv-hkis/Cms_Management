@@ -9,10 +9,21 @@
             data: { Email: email, Password: password },
             success: function (result) {
                 if (result != undefined) {
-                    alert("login successfully");
-                    window.location.href = "/Employee/EmployeeAdd";
+                    Swal.fire({
+                        title: 'Success!',
+                        text: "Login SuccessFully!",
+                        icon: 'success',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/Employee/EmployeeList";
+                        }
+                    });
                 } else {
-                    alert("login Failed");
+                    Swal.fire(
+                        'Opps',
+                        'Something went wrong!',
+                        'error'
+                    )
                 }
             }
         });
@@ -20,6 +31,44 @@
     else {
         alert("Please enter email and password");
     }
+}
+
+
+function DeleteEmployee(Id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/Employee/EmployeeDelete',
+                type: 'POST',
+                data: { Id: Id },
+                success: function (data) {
+                    if (data == "success") {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your employee has been deleted.',
+                            'success'
+                        );
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+        else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Cancelled',
+                'Your employee has benn canceled :)',
+                'error'
+            )
+        }
+    });
 }
 
 
