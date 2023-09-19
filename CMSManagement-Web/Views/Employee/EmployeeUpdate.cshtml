@@ -4,81 +4,90 @@
     ViewData["Title"] = "EmployeeUpdate";
 }
 
-<h1>EmployeeUpdate</h1>
+<link href="~/css/employee.css" rel="stylesheet" />
 
-<h4>Employee</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EmployeeUpdate">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Firstname" class="control-label"></label>
-                <input asp-for="Firstname" class="form-control" />
-                <span asp-validation-for="Firstname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Lastname" class="control-label"></label>
-                <input asp-for="Lastname" class="form-control" />
-                <span asp-validation-for="Lastname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                @*<input asp-for="Gender" class="form-control" />*@
-                <div class="col-md-10">
-                    <input asp-for="Gender"
-                           id="Gender"
-                           name="Gender"
-                           type="radio"
-                           value="1" />Male
+<div class="container employee">
+    <div class="row">
+        <div class="col-md-3 employee-left">
+            <h3>Welcome, Administrator</h3>
+            <p>Welcome to the Administrator Dashboard. This is your dedicated space for managing and overseeing all aspects of our website. From content updates to user management, you have the tools to keep everything running smoothly. If you have any questions or need assistance, don't hesitate to reach out to our support team. Thank you for your contributions to our organization's success!</p>
+        </div>
+        <div class="col-md-9 employee-right">
+            <form asp-action="EmployeeUpdate">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="tab-content" id="myTabContent">
+                    <h3 class="employee-heading">Add Employee</h3>
+                    <div class="row employee-form">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Firstname" class="control-label"></label>
+                                <input asp-for="Firstname" class="form-control" />
+                                <span asp-validation-for="Firstname" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Gender" class="control-label fw-bold mb-2"></label>
+                                <div class="col-md-10 mb-1">
+                                    <input asp-for="Gender"
+                                           id="Gender"
+                                           name="Gender"
+                                           type="radio"
+                                           value="1" />Male
 
-                    <input asp-for="Gender" id="Gender"
-                           name="Gender"
-                           type="radio"
-                           value="0" />Female
+                                    <input asp-for="Gender" id="Gender"
+                                           name="Gender"
+                                           type="radio"
+                                           value="0" />Female
+                                </div>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Birthdate" class="control-label"></label>
+                                <input type="date" asp-for="Birthdate" class="form-control" />
+                                <span asp-validation-for="Birthdate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Lastname" class="control-label"></label>
+                                <input asp-for="Lastname" class="form-control" />
+                                <span asp-validation-for="Lastname" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label asp-for="Mobile_No" class="control-label"></label>
+                                <input asp-for="Mobile_No" class="form-control" />
+                                <span asp-validation-for="Mobile_No" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label asp-for="Role" class="control-label"></label>
+                                <select class="form-select" id="ddRole" asp-for="Role" name="Role" onchange="SelectedChange()">
+                                    <option value="-1" selected>Select Role</option>
+                                    <option value="1" asp-for="Role">Administrator</option>
+                                    <option value="0" asp-for="Role">Employee</option>
+                                </select>
+                                <span id="error-message" class="text-danger" style="display:none">The Role field is required.</span>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex justify-content-center">
+                            <a asp-action="EmployeeList" asp-controller="Employee" id="btnBack" class="btn btn-secondary btn-lg btnBack">Go Back</a>
+                            <input type="submit" value="Save" class="btn btn-primary btn-lg btnEmployee" />
+                        </div>
+                    </div>
                 </div>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Mobile_No" class="control-label"></label>
-                <input asp-for="Mobile_No" class="form-control" />
-                <span asp-validation-for="Mobile_No" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Birthdate" class="control-label"></label>
-                <input type="date" asp-for="Birthdate" class="form-control" />
-                <span asp-validation-for="Birthdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                @*<input asp-for="Role" class="form-control" />
-                <span asp-validation-for="Role" class="text-danger"></span>*@
-                <select class="form-select" id="ddRole" asp-for="Role" name="Role" onchange="SelectedChange()">
-                    <option value="-1" selected>Select Role</option>
-                    <option value="1" asp-for="Role">Administrator</option>
-                    <option value="0" asp-for="Role">Employee</option>
-                </select>
-                <span id="error-message" class="text-danger" style="display:none">The Role field is required.</span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -87,5 +96,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

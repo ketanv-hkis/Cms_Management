@@ -24,11 +24,6 @@ namespace CMSManagement_API.Controllers
             _employeeService = employeeService;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(Login login)

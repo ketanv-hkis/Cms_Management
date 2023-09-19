@@ -29,7 +29,11 @@
         });
     }
     else {
-        alert("Please enter email and password");
+        Swal.fire(
+            'Failed!',
+            'Please Enter Email and Password.',
+            'error'
+        );
     }
 }
 
@@ -60,13 +64,6 @@ function DeleteEmployee(Id) {
                     }
                 }
             })
-        }
-        else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire(
-                'Cancelled',
-                'Your employee has benn canceled :)',
-                'error'
-            )
         }
     });
 }
