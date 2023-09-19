@@ -4,6 +4,23 @@
     ViewData["Title"] = "EmployeeAdd";
 }
 
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            Swal.fire({
+                text: "@ViewBag.Message",
+                icon: 'success',
+                type: "success",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "EmployeeList";
+                }
+            })
+        }
+    </script>
+}
+
 <link href="~/css/employee.css" rel="stylesheet" />
 
 <div class="container employee">
@@ -26,7 +43,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Email" class="control-label fw-bold"></label>
-                                <input asp-for="Email" class="form-control" placeholder="Enter Email" />
+                                <input type="email" asp-for="Email" class="form-control" placeholder="Enter Email" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -47,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Birthdate" class="control-label fw-bold"></label>
-                                <input type="date" asp-for="Birthdate" class="form-control" />
+                                <input type="date" asp-for="Birthdate" onselect="" class="form-control" />
                                 <span asp-validation-for="Birthdate" class="text-danger"></span>
                             </div>
                         </div>
@@ -59,12 +76,12 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Password" class="control-label fw-bold"></label>
-                                <input asp-for="Password" class="form-control" placeholder="Enter Password" />
+                                <input type="password" asp-for="Password" class="form-control" placeholder="Enter Password" />
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label fw-bold">Mobile No.</label>
-                                <input asp-for="Mobile_No" class="form-control" placeholder="Enter Mobile No." />
+                                <input asp-for="Mobile_No" class="form-control" placeholder="Enter Mobile No." onkeydown="return (event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 8;" />
                                 <span asp-validation-for="Mobile_No" class="text-danger"></span>
                             </div>
                             <div class="form-group">

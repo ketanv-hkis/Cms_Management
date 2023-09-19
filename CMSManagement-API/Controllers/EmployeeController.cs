@@ -94,10 +94,14 @@ namespace CMSManagement_API.Controllers
             {
                 var list = _employeeService.GetUserById(id);
 
-                string base64EncodedPassword = list.Password;
-                byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
-                string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
-                list.Password = decodedPassword;
+                if (list != null)
+                {
+
+                    string base64EncodedPassword = list.Password;
+                    byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
+                    string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
+                    list.Password = decodedPassword;
+                }
 
                 return Ok(list);
             }

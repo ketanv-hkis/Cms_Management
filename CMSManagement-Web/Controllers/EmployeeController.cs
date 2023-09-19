@@ -66,6 +66,7 @@ namespace CMSManagement_Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         string responseAsString = response.Content.ReadAsStringAsync().Result;
+                        ViewBag.Message = "Employee Add SuccessFully !";
                         return View();
                     }
                 }
@@ -114,7 +115,7 @@ namespace CMSManagement_Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         string responseAsString = response.Content.ReadAsStringAsync().Result;
-                        return View();
+                        return RedirectToAction("EmployeeList");
                     }
                 }
                 return Ok(null);

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CMSManagement_Web.Models.Taskdetails>
+
+@{
+    ViewData["Title"] = "TaskList";
+}
+
+<h1>TaskList</h1>
+
+<p>
+    <a asp-action="SaveTask">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estimatedtime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskStatus)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estimatedtime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStatus)
+                </td>
+                <td>
+                    <a asp-action="UpdateTask" asp-route-id="@item.Task_Id" style="color:green; font-size:x-large"><i class="fa fa-edit"></i></a>
+                    <a asp-action="DetailsTask" asp-route-id="@item.Task_Id" style="color:black; font-size:x-large"><i class="fa fa-eye"></i></a>
+                    <a onclick="DeleteTask(@item.Task_Id)" style="cursor:pointer; text-decoration:underline; color:red;font-size:x-large;margin-left:4%;"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

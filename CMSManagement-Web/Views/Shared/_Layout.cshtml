@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CMSManagement_Web.styles.css" asp-append-version="true" />
     <script src="~/js/employee.js"></script>
-
+    <script src="~/js/task.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -25,12 +25,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 hide" id="navbar">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="TaskList">Task</a>
                         </li>
                     </ul>
                 </div>
@@ -66,9 +69,11 @@
                 url: "/Home/Authentication",
                 success: function (response) {
                     if (response != null) {
+                        $('#navbar').removeClass('hide');
                         $('#loginButton').addClass('hide');
                         $('#logoutButton').removeClass('hide');
                     } else {
+                        $('#navbar').addClass('hide');
                         $('#logoutButton').addClass('hide');
                         $('#loginButton').removeClass('hide');
                     }
