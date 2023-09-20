@@ -3,6 +3,7 @@ using Dapper;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
+using System.Xml.Linq;
 
 namespace CMSManagement_API.Repository
 {
@@ -30,12 +31,19 @@ namespace CMSManagement_API.Repository
             var parameter = new DynamicParameters();
             if (!string.IsNullOrEmpty(taskdetails.Image) && !string.IsNullOrEmpty(taskdetails.Video))
             {
-                byte[] image64 = Convert.FromBase64String(taskdetails.Image);
-                string uniqueName = Guid.NewGuid().ToString("N");
-                string imagePath = Path.Combine("Images", uniqueName + ".jpeg");
-                File.WriteAllBytes(imagePath, image64);
-                taskdetails.Image = imagePath;
-
+                List<string> imagePaths = new List<string>();
+                string[] imageList = taskdetails.Image.Split(", ");
+                foreach (var file in imageList)
+                {
+                    byte[] image64 = Convert.FromBase64String(file);
+                    string uniqueName = Guid.NewGuid().ToString("N");
+                    string imagePath = Path.Combine("Images", uniqueName + ".jpeg");
+                    File.WriteAllBytes(imagePath, image64);
+                    imagePaths.Add(imagePath);
+                    
+                }
+                string joinImagepath = string.Join(", ", imagePaths);
+                taskdetails.Image = joinImagepath;
 
                 byte[] video = Convert.FromBase64String(taskdetails.Video);
                 string videoName = Guid.NewGuid().ToString("N");
@@ -124,6 +132,17 @@ namespace CMSManagement_API.Repository
                     return false;
                 else
                     return true;
+            }
+        }
+
+
+
+        public IEnumerable<Models.TaskStatus> GetAllTaskStatus()
+        {
+            using (IDbConnection connection = GetDbConnection())
+            {
+                var result = connection.Query<Models.TaskStatus>("sp_GetAllTaskStatus", commandType: CommandType.StoredProcedure);
+                return result;
             }
         }
     }

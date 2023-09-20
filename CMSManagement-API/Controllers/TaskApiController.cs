@@ -59,10 +59,17 @@ namespace CMSManagement_API.Controllers
                 var list = _taskService.GetTaskById(id);
                 if (list.Image != null)
                 {
-                    string path = Path.Combine($"{list.Image}");
-                    var photo = System.IO.File.ReadAllBytes(path);
-                    list.Image = Convert.ToBase64String(photo);
-
+                    List<string> imagePaths = new List<string>();
+                    string[] imageList = list.Image.Split(", ");
+                    foreach (var file in imageList)
+                    {
+                        string path = Path.Combine($"{file}");
+                        var photo = System.IO.File.ReadAllBytes(path);
+                        var image = Convert.ToBase64String(photo);
+                        imagePaths.Add(image);
+                    }
+                    string joinImagepath = string.Join(", ", imagePaths);
+                    list.Image = joinImagepath;
                 }
                 if (list.Video != null)
                 {
@@ -113,5 +120,21 @@ namespace CMSManagement_API.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
+        [HttpGet]
+        public IActionResult TaskStatusList()
+        {
+            try
+            {
+                var data = _taskService.GetAllTaskStatus();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

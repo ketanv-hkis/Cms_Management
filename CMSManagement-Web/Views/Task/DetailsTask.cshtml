@@ -3,104 +3,96 @@
 @{
     ViewData["Title"] = "DetailsTask";
 }
+<link href="~/css/task.css" rel="stylesheet" />
 
-<h1>DetailsTask</h1>
-
-<div>
-    <h4>Taskdetails</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Task_Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Task_Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @*@Html.DisplayFor(model => model.Image)*@
-            <img src="@Model.Image" height="100" width="100" />
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Video)
-        </dt>
-        <dd class = "col-sm-10">
-            <video controls height="200" width="200">
-                <source src="@Model.Video" type="video/mp4">
-            </video>
-            @*@Html.DisplayFor(model => model.Video)*@
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estimatedtime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estimatedtime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Comment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TaskStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TaskStatus)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Is_Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Is_Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Is_Delete)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Is_Delete)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Created_by)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Created_by)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Created_date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Created_date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Modified_by)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Modified_by)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Modified_date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Modified_date)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="card mt-5">
+    <div class="container-fluid h-custom d-flex justify-content-center">
+        <div class="row col-md-7 event">
+            <h3 class="d-flex justify-content-center mb-4 mt-4 text-danger">Task Details</h3>
+            <dl class="row d-flex justify-content-center">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+                <dd class="col-sm-10">
+                    @*@Html.DisplayFor(model => model.Image)*@
+                    @{
+                        string[] imageList = Model.Image.Split(", ");
+                        foreach (var file in imageList)
+                        {
+                            <img src="data:image/jpg;base64,@file" height="200" width="400" />
+                        }
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Video)
+                </dt>
+                <dd class="col-sm-10">
+                    <video controls height="200" width="400">
+                        <source src="data:video/mp4;base64,@Model.Video" type="video/mp4">
+                    </video>
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Estimatedtime)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Estimatedtime)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Comment)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Comment)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.TaskStatus)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.TaskStatus == 1)
+                    {
+                        <span>Creating </span>
+                    }
+                    else if (Model.TaskStatus == 2)
+                    {
+                        <span>Open</span>
+                    }
+                    else if (Model.TaskStatus == 3)
+                    {
+                        <span>Working</span>
+                    }
+                    else if (Model.TaskStatus == 4)
+                    {
+                        <span>Developer Done</span>
+                    }
+                    else if (Model.TaskStatus == 5)
+                    {
+                        <span>Testing Done</span>
+                    }
+                    else if (Model.TaskStatus == 6)
+                    {
+                        <span>Re-Open</span>
+                    }
+                    else if (Model.TaskStatus == 7)
+                    {
+                        <span>Tested</span>
+                    }
+                </dd>
+            </dl>
+            <div class="d-flex justify-content-center mt-2 mb-4">
+                <a asp-action="TaskList" asp-controller="Task" id="btnBack" class="btn btn-secondary btnBack">Go Back</a>
+                <a asp-action="UpdateTask" asp-controller="Task" id="btnEdit" asp-route-id="@Model.Task_Id" class="btn btnUpdate">Edit</a>
+            </div>
+        </div>
+    </div>
+</section>

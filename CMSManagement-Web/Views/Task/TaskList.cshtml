@@ -6,12 +6,11 @@
 
 <h1>TaskList</h1>
 
-<p>
-    <a asp-action="SaveTask">Create New</a>
-</p>
-<table class="table">
+<a asp-action="SaveTask" class="btn btn-primary mb-2 mt-2">Create New <i class="fa fa-plus"></i></a>
+
+<table class="table table-bordered table-striped">
     <thead>
-        <tr>
+        <tr class="text-center table-success">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>

@@ -37,5 +37,12 @@ namespace CMSManagement_API.Services
             bool deleted = _taskRepository.DeleteTask(Id);
             return deleted;
         }
+
+
+        public IEnumerable<Models.TaskStatus> GetAllTaskStatus()
+        {
+            return _taskRepository.GetAllTaskStatus();
+        }
+
     }
 }

@@ -7,8 +7,9 @@ namespace CMSManagement_API.Repository
         void TaskAdd(Taskdetails taskdetails);
         Taskdetails GetTaskById(int Id);
         IEnumerable<Taskdetails> GetAllTasks();
-
         void UpdateTask(Taskdetails taskdetails);
         bool DeleteTask(int id);
+
+        IEnumerable<Models.TaskStatus> GetAllTaskStatus();
     }
 }
