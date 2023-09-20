@@ -85,5 +85,36 @@ namespace CMSManagement_API.Controllers
             var token = tokenHandler.CreateToken(tokenDescription);
             return tokenHandler.WriteToken(token);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetEmployeeDetail(int Id)
+        {
+            try
+            {
+                var list = _employeeService.GetEmployeeDetail(Id);
+                return Ok(list);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetEmployee()
+        {
+            try
+            {
+                var list = _employeeService.GetEmployee();
+                return Ok(list);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

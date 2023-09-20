@@ -24,5 +24,17 @@ namespace CMSManagement_API.Services
                 return null;
             }
         }
+
+        public List<Employee> GetEmployeeDetail(int Id)
+        {
+            List<Employee> getEmployee = _employeeRepository.GetEmployeeDetail(Id);
+            return getEmployee;
+        }
+
+        public List<Employee> GetEmployee()
+        {
+            List<Employee> employees = _employeeRepository.GetEmployee();
+            return employees;
+        }
     }
 }

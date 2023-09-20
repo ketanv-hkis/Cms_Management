@@ -5,12 +5,14 @@ using System.Data.Common;
 using CMSManagement_API.Models;
 using System.Data.SqlClient;
 using Dapper;
+using CMSManagement_API.Contant;
 
 namespace CMSManagement_API.Repository
 {
     public class EmployeeRepository:IEmployeeRepository
     {
         private IConfiguration configuration;
+        TaskManagement taskManagement = new TaskManagement();
         public EmployeeRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
@@ -39,8 +41,33 @@ namespace CMSManagement_API.Repository
             parameter.Add("@Password", Password, DbType.String, ParameterDirection.Input);
             using (IDbConnection connection = GetDbConnection())
             {
-                return (Employee)SqlMapper.Query<Employee>(connection, "uspGetEmployee", parameter, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return (Employee)SqlMapper.Query<Employee>(connection, taskManagement.Login, parameter, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
+
+        
+
+        public List<Employee> GetEmployeeDetail(int Id)
+        {
+
+            var parameter = new DynamicParameters();
+            parameter.Add("@Id", Id, DbType.String, ParameterDirection.Input);
+            using (IDbConnection connection = GetDbConnection())
+            {
+                List<Employee> employees = SqlMapper.Query<Employee>(connection, taskManagement.GetEmployeeDetail, parameter, commandType: CommandType.StoredProcedure).ToList();
+                return employees;
+            }
+        }
+
+
+        public List<Employee> GetEmployee()
+        {
+            using (IDbConnection connection = GetDbConnection())
+            {
+                List<Employee> employees = SqlMapper.Query<Employee>(connection, taskManagement.GetEmployee, commandType: CommandType.StoredProcedure).ToList();
+                return employees;
+            }
+        }
+
     }
 }
