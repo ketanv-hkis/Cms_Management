@@ -67,7 +67,7 @@ namespace CMSManagement_Web.Controllers
                     string responseAsString = response.Content.ReadAsStringAsync().Result;
 
 
-                    return Ok(responseAsString);
+                    return Json(responseAsString);
 
                 }
             }
