@@ -46,7 +46,34 @@
                     @Html.DisplayFor(modelItem => item.Comment)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TaskStatus)
+                    @if (item.TaskStatus == 1)
+                    {
+                        <span>Creating</span>
+                    }
+                    else if (item.TaskStatus == 2)
+                    {
+                        <span>Open</span>
+                    }
+                    else if (item.TaskStatus == 3)
+                    {
+                        <span>Working</span>
+                    }
+                    else if (item.TaskStatus == 4)
+                    {
+                        <span>Developer Done</span>
+                    }
+                    else if (item.TaskStatus == 5)
+                    {
+                        <span>Testing Done</span>
+                    }
+                    else if (item.TaskStatus == 6)
+                    {
+                        <span>Re-Open</span>
+                    }
+                    else if (item.TaskStatus == 7)
+                    {
+                        <span>Tested</span>
+                    }
                 </td>
                 <td>
                     <a asp-action="UpdateTask" asp-route-id="@item.Task_Id" style="color:green; font-size:x-large"><i class="fa fa-edit"></i></a>

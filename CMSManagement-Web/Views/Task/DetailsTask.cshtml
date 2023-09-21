@@ -7,7 +7,7 @@
 
 <section class="card mt-5">
     <div class="container-fluid h-custom d-flex justify-content-center">
-        <div class="row col-md-7 event">
+        <div class="row col-md-8 event">
             <h3 class="d-flex justify-content-center mb-4 mt-4 text-danger">Task Details</h3>
             <dl class="row d-flex justify-content-center">
                 <dt class="col-sm-2">
@@ -26,7 +26,6 @@
                     @Html.DisplayNameFor(model => model.Image)
                 </dt>
                 <dd class="col-sm-10">
-                    @*@Html.DisplayFor(model => model.Image)*@
                     @{
                         string[] imageList = Model.Image.Split(", ");
                         foreach (var file in imageList)
@@ -91,7 +90,7 @@
             </dl>
             <div class="d-flex justify-content-center mt-2 mb-4">
                 <a asp-action="TaskList" asp-controller="Task" id="btnBack" class="btn btn-secondary btnBack">Go Back</a>
-                <a asp-action="UpdateTask" asp-controller="Task" id="btnEdit" asp-route-id="@Model.Task_Id" class="btn btnUpdate">Edit</a>
+                <a asp-action="UpdateTask" asp-controller="Task" id="btnEdit" asp-route-id="@Model.Task_Id" class="btn btn-primary btnUpdate">Edit</a>
             </div>
         </div>
     </div>
