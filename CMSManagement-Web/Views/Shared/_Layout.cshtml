@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - CMSManagement_Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/CMSManagement_Web.styles.css" asp-append-version="true" />
+    <script src="~/js/employee.js"></script>
 </head>
 <body>
     <header>
@@ -18,14 +18,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                    <ul class="navbar-nav flex-grow-1" id="dynamicMenu">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>*@
                     </ul>
+
                 </div>
             </div>
         </nav>
