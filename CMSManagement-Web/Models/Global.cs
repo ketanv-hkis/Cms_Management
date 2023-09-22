@@ -2,12 +2,12 @@
 
 namespace CMSManagement_Web.Models
 {
-    public class Initial
+    public class Global
     {
 
         private readonly IHttpContextAccessor _accessor;
 
-        public Initial(IHttpContextAccessor accessor)
+        public Global(IHttpContextAccessor accessor)
         {
             _accessor = accessor;
         }

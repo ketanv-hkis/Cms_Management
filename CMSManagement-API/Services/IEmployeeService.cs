@@ -4,7 +4,7 @@ namespace CMSManagement_API.Services
 {
     public interface IEmployeeService
     {
-        Employee Login(string email, string password);
+        Employee Login(Login login);
         IEnumerable<Employee> GetAllEmployee();
         void SaveEmployeeDetail(Employee employee);
         void UpdateEmployeeDetail(Employee employee);

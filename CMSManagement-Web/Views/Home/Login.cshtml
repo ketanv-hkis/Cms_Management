@@ -27,7 +27,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fa fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" asp-for="Password" id="txtPassword" class="form-control" onkeypress="return event.charCode != 32" placeholder="Enter Password" />
+                                            <input type="password" asp-for="Password" onkeyup="onEnter()" id="txtPassword" class="form-control" onkeypress="return event.charCode != 32" placeholder="Enter Password" />
                                             <span asp-validation-for="Password" class="text-danger"></span>
                                         </div>
                                     </div>

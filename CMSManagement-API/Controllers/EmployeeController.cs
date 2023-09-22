@@ -30,7 +30,7 @@ namespace CMSManagement_API.Controllers
         {
             try
             {
-                var list = _employeeService.Login(login.Email, login.Password);
+                var list = _employeeService.Login(login);
 
                 if (list != null)
                 {

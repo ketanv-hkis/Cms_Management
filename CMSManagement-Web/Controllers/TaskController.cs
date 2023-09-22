@@ -2,28 +2,26 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CMSManagement_Web.Controllers
 {
     [Authentication]
     public class TaskController : Controller
     {
-        private readonly Initial _initial;
-
-        public TaskController(Initial initial)
+        private readonly Global _global;
+        HttpClient _client = new HttpClient();
+        public TaskController(Global global)
         {
-            _initial = initial;
+            _global = global;
+            _client = _global.HttpClients();
         }
-
-        public IActionResult TaskList()
+        
+        public async Task<IActionResult> TaskList()
         {
             try
             {
-                HttpClient _client = _initial.HttpClients();
-                HttpResponseMessage response = _client.GetAsync("TaskApi/TaskList").Result;
+                
+                HttpResponseMessage response = await _client.GetAsync("TaskApi/TaskList");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -41,10 +39,9 @@ namespace CMSManagement_Web.Controllers
         }
 
 
-        public ActionResult SaveTask()
+        public async Task<IActionResult> SaveTask()
         {
-            HttpClient _client = _initial.HttpClients();
-            HttpResponseMessage response = _client.GetAsync("TaskApi/TaskStatusList").Result;
+            HttpResponseMessage response = await _client.GetAsync("TaskApi/TaskStatusList");
 
             if (response.IsSuccessStatusCode)
             {
@@ -57,7 +54,7 @@ namespace CMSManagement_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveTask(Taskdetails taskdetails)
+        public async Task<IActionResult> SaveTask(Taskdetails taskdetails)
         {
             try
             {
@@ -84,8 +81,7 @@ namespace CMSManagement_Web.Controllers
                     taskdetails.Video = videoByte;
                 }
 
-                HttpClient _client = _initial.HttpClients();
-                HttpResponseMessage response = _client.PostAsJsonAsync<Taskdetails>("TaskApi/TaskAdd", taskdetails).Result;
+                HttpResponseMessage response = await _client.PostAsJsonAsync<Taskdetails>("TaskApi/TaskAdd", taskdetails);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -101,13 +97,12 @@ namespace CMSManagement_Web.Controllers
         }
 
 
-        public ActionResult UpdateTask(int id)
+        public async Task<IActionResult> UpdateTask(int id)
         {
             try
             {
 
-                HttpClient _client = _initial.HttpClients();
-                HttpResponseMessage res = _client.GetAsync("TaskApi/TaskStatusList").Result;
+                HttpResponseMessage res =  await _client.GetAsync("TaskApi/TaskStatusList");
 
                 if (res.IsSuccessStatusCode)
                 {
@@ -123,15 +118,6 @@ namespace CMSManagement_Web.Controllers
                 {
                     string jsonResponse = response.Content.ReadAsStringAsync().Result;
                     Taskdetails taskdetails = JsonConvert.DeserializeObject<Taskdetails>(jsonResponse);
-
-                    //if (taskdetails.Image != null)
-                    //{
-                    //    taskdetails.Image = "data:image/jpeg;base64," + taskdetails.Image;
-                    //}
-                    //if (taskdetails.Video != null)
-                    //{
-                    //    taskdetails.Video = "data:video/mp4;base64," + taskdetails.Video;
-                    //}
                     return View(taskdetails);
                 }
             }
@@ -143,31 +129,14 @@ namespace CMSManagement_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateTask(Taskdetails taskdetails)
+        public async Task<IActionResult> UpdateTask(Taskdetails taskdetails)
         {
             try
             {
                 string Modifiedby = HttpContext.Session.GetString("Id");
                 taskdetails.Modified_by = Convert.ToInt32(Modifiedby);
 
-                //using (var ms = new MemoryStream())
-                //{
-                //    taskdetails.ImageData.CopyTo(ms);
-                //    var fileByte = ms.ToArray();
-                //    string ImageByte = Convert.ToBase64String(fileByte);
-                //    taskdetails.Image = ImageByte;
-                //}
-
-                //using (var ms = new MemoryStream())
-                //{
-                //    taskdetails.Videodata.CopyTo(ms);
-                //    var ByteArray = ms.ToArray();
-                //    string videoByte = Convert.ToBase64String(ByteArray);
-                //    taskdetails.Video = videoByte;
-                //}
-
-                HttpClient _client = _initial.HttpClients();
-                HttpResponseMessage response = _client.PostAsJsonAsync<Taskdetails>("TaskApi/UpdateTask", taskdetails).Result;
+                HttpResponseMessage response = await _client.PostAsJsonAsync<Taskdetails>("TaskApi/UpdateTask", taskdetails);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -183,14 +152,13 @@ namespace CMSManagement_Web.Controllers
 
 
         [HttpPost]
-        public IActionResult DeleteTask(int? Id)
+        public async Task<IActionResult> DeleteTask(int? Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    HttpClient _client = _initial.HttpClients();
-                    HttpResponseMessage response = _client.DeleteAsync("TaskApi/DeleteTask?id=" + Id).Result;
+                    HttpResponseMessage response = await _client.DeleteAsync("TaskApi/DeleteTask?id=" + Id);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -207,17 +175,16 @@ namespace CMSManagement_Web.Controllers
         }
 
 
-        public ActionResult DetailsTask(int id)
+        public async Task<IActionResult> DetailsTask(int id)
         {
             try
             {
-                HttpClient _client = _initial.HttpClients();
-                HttpResponseMessage response = _client.GetAsync("TaskApi/GetTaskById?id=" + id).Result;
+                HttpResponseMessage response = await _client.GetAsync("TaskApi/GetTaskById?id=" + id);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string jsonResponse = response.Content.ReadAsStringAsync().Result;
-                    Taskdetails taskdetails = JsonConvert.DeserializeObject<Taskdetails>(jsonResponse);
+                    string details = response.Content.ReadAsStringAsync().Result;
+                    Taskdetails taskdetails = JsonConvert.DeserializeObject<Taskdetails>(details);
                     return View(taskdetails);
                 }
             }

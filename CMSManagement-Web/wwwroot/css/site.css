@@ -25,16 +25,32 @@ body {
     display: none !important;
 }
 
+nav.navbar {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    box-shadow: rgba(0, 0, 0, 0.38) 0px 2px 4px;
+    background-color: #50799a !important;
+}
+
+.mainBody {
+    margin-bottom: 0 !important;
+    margin-top: 5% !important;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
     line-height: 45px;
+    background-color: slategrey;
+    color: white !important;
+    font-weight: 600;
+    font-size: larger;
 }
 
 .fa-user {
-    background: #1d607a;
+    background: #479bce;
     color: white;
     padding: 9px 12px;
     border-radius: 50%;

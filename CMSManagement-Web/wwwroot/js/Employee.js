@@ -1,4 +1,13 @@
-﻿function LoginUser() {
+﻿
+function onEnter()
+{
+    if (event.keyCode === 13) {
+        LoginUser();
+    }
+}
+
+
+function LoginUser() {
     var email = $('#txtEmail').val();
     var password = $('#txtPassword').val();
 
@@ -15,7 +24,7 @@
                         icon: 'success',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "/Employee/EmployeeList";
+                            window.location.href = "/employee/employeelist";
                         }
                     });
                 } else {

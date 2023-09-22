@@ -12,7 +12,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<Initial>();
+builder.Services.AddScoped<Global>();
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddAuthentication(options =>
 {

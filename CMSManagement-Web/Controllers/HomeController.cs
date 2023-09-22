@@ -18,8 +18,6 @@ namespace CMSManagement_Web.Controllers
 
         public IActionResult Index()
         {
-            string session = HttpContext.Session.GetString("Id");
-            ViewBag.response = (session);
             return View();
         }
 
@@ -29,20 +27,20 @@ namespace CMSManagement_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(Login login)
+        public async Task<IActionResult> Login(Login login)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-                    var response = client.PostAsJsonAsync<Login>("Login", login).Result;
+                    var response = await client.PostAsJsonAsync<Login>("Login", login);
 
                     if (response.IsSuccessStatusCode)
                     {
                         string responseAsString = response.Content.ReadAsStringAsync().Result;
 
-                        if (responseAsString != "")
+                        if (responseAsString != null)
                         {
 
                             JObject json = JObject.Parse(responseAsString);
@@ -50,7 +48,6 @@ namespace CMSManagement_Web.Controllers
                             int role = (int)json["role"];
                             string token = (string)json["token"];
 
-                            //HttpContext.Session.SetString("Id", responseAsString);
                             HttpContext.Session.SetString("Id", id.ToString());
                             HttpContext.Session.SetString("Role", role.ToString());
                             HttpContext.Session.SetString("Token", token);
@@ -74,7 +71,7 @@ namespace CMSManagement_Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Authentication()
+        public async Task<IActionResult> Authentication()
         {
             return Json(HttpContext.Session.GetString("Token"));
         }

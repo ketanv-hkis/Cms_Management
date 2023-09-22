@@ -28,14 +28,14 @@ namespace CMSManagement_API.Repository
         }
 
 
-        public Employee Login(string email, string password)
+        public Employee Login(Login login)
         {
-            byte[] encode = new byte[password.Length];
-            encode = Encoding.UTF8.GetBytes(password);
+            byte[] encode = new byte[login.Password.Length];
+            encode = Encoding.UTF8.GetBytes(login.Password);
             string Password = Convert.ToBase64String(encode);
 
             var parameter = new DynamicParameters();
-            parameter.Add("@Email", email, DbType.String, ParameterDirection.Input);
+            parameter.Add("@Email", login.Email, DbType.String, ParameterDirection.Input);
             parameter.Add("@Password", Password, DbType.String, ParameterDirection.Input);
             using (IDbConnection connection = GetDbConnection())
             {

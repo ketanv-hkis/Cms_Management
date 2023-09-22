@@ -19,19 +19,20 @@ namespace CMSManagement_Web.Controllers
     [Authentication]
     public class EmployeeController : Controller
     {
-        private readonly Initial _initial;
+        private readonly Global _global;
+        HttpClient _client = new HttpClient();
 
-        public EmployeeController(Initial initial)
+        public EmployeeController(Global global)
         {
-            _initial = initial;
+            _global = global;
+            _client = _global.HttpClients();
         }
 
-        public IActionResult EmployeeList()
+        public async Task<IActionResult> EmployeeList()
         {
             try
             {
-                HttpClient _client = _initial.HttpClients();
-                HttpResponseMessage response = _client.GetAsync("Employee/GetAllEmployee").Result;
+                HttpResponseMessage response = await _client.GetAsync("Employee/GetAllEmployee");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -54,14 +55,13 @@ namespace CMSManagement_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EmployeeAdd(Employee employee)
+        public async Task<IActionResult> EmployeeAdd(Employee employee)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    HttpClient _client = _initial.HttpClients();
-                    HttpResponseMessage response = _client.PostAsJsonAsync<Employee>("Employee/SaveEmployee", employee).Result;
+                    HttpResponseMessage response = await _client.PostAsJsonAsync<Employee>("Employee/SaveEmployee", employee);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -79,12 +79,11 @@ namespace CMSManagement_Web.Controllers
         }
 
 
-        public IActionResult EmployeeUpdate(int id)
+        public async Task<IActionResult> EmployeeUpdate(int id)
         {
             try
             {
-                HttpClient _client = _initial.HttpClients();
-                HttpResponseMessage response = _client.GetAsync("Employee/GetUserById?id=" + id).Result;
+                HttpResponseMessage response = await _client.GetAsync("Employee/GetUserById?id=" + id);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -101,7 +100,7 @@ namespace CMSManagement_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EmployeeUpdate(Employee employees)
+        public async Task<IActionResult> EmployeeUpdate(Employee employees)
         {
             try
             {
@@ -109,8 +108,7 @@ namespace CMSManagement_Web.Controllers
                 {
                     string Modifiedby = HttpContext.Session.GetString("Id");
                     employees.Modified_by = Convert.ToInt32(Modifiedby);
-                    HttpClient _client = _initial.HttpClients();
-                    HttpResponseMessage response = _client.PostAsJsonAsync<Employee>("Employee/UpdateEmployee", employees).Result;
+                    HttpResponseMessage response = await _client.PostAsJsonAsync<Employee>("Employee/UpdateEmployee", employees);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -127,14 +125,13 @@ namespace CMSManagement_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EmployeeDelete(int? Id)
+        public async Task<IActionResult> EmployeeDelete(int? Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    HttpClient _client = _initial.HttpClients();
-                    HttpResponseMessage response = _client.DeleteAsync("Employee/DeleteEmployee?id=" + Id).Result;
+                    HttpResponseMessage response = await _client.DeleteAsync("Employee/DeleteEmployee?id=" + Id);
 
                     if (response.IsSuccessStatusCode)
                     {

@@ -12,9 +12,9 @@ namespace CMSManagement_API.Services
             _employeeRepository = employeeRepository;
         }
 
-        public Employee Login(string email, string password)
+        public Employee Login(Login login)
         {
-            Employee EmployeeDetails = _employeeRepository.Login(email, password);
+            Employee EmployeeDetails = _employeeRepository.Login(login);
             if (EmployeeDetails != null)
             {
                 return EmployeeDetails;
