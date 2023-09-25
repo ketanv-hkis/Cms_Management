@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CMSManagement_Web.Models.Employee>
+
+@{
+    ViewData["Title"] = "EmployeeList";
+}
+
+
+<h1>Employee List</h1>
+
+<a asp-action="EmployeeAdd" class="btn btn-primary mb-2 mt-2">Create New <i class="fa fa-plus"></i></a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="text-center table-success">
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile_No)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <span style="-webkit-text-security: disc;">@item.Password</span>
+                </td>
+                <td>
+                    @if (item.Gender == 1)
+                    {
+                        <span>Male</span>
+                    }
+                    else
+                    {
+                        <span>Female</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile_No)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Birthdate)
+                </td>
+                <td>
+                    @if (item.Role == 1)
+                    {
+                        <span>Administrator</span>
+                    }
+                    else
+                    {
+                        <span>Employee</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="EmployeeUpdate" asp-route-id="@item.Id" style="color:green; font-size:x-large"><i class="fa fa-edit"></i></a> 
+                    <a onclick="DeleteEmployee(@item.Id)" style="cursor:pointer; text-decoration:underline; color:red;font-size:x-large;margin-left:4%;"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

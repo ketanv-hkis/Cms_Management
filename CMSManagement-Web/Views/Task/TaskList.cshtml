@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CMSManagement_Web.Models.Taskdetails>
+
+@{
+    ViewData["Title"] = "TaskList";
+}
+
+<h1>TaskList</h1>
+
+<a asp-action="SaveTask" class="btn btn-primary mb-2 mt-2">Create New <i class="fa fa-plus"></i></a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="text-center table-success">
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estimatedtime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskStatus)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estimatedtime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @if (item.TaskStatus == 1)
+                    {
+                        <span>Creating</span>
+                    }
+                    else if (item.TaskStatus == 2)
+                    {
+                        <span>Open</span>
+                    }
+                    else if (item.TaskStatus == 3)
+                    {
+                        <span>Working</span>
+                    }
+                    else if (item.TaskStatus == 4)
+                    {
+                        <span>Developer Done</span>
+                    }
+                    else if (item.TaskStatus == 5)
+                    {
+                        <span>Testing Done</span>
+                    }
+                    else if (item.TaskStatus == 6)
+                    {
+                        <span>Re-Open</span>
+                    }
+                    else if (item.TaskStatus == 7)
+                    {
+                        <span>Tested</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="UpdateTask" asp-route-id="@item.Task_Id" style="color:green; font-size:x-large"><i class="fa fa-edit"></i></a>
+                    <a asp-action="DetailsTask" asp-route-id="@item.Task_Id" style="color:black; font-size:x-large"><i class="fa fa-eye"></i></a>
+                    <a onclick="DeleteTask(@item.Task_Id)" style="cursor:pointer; text-decoration:underline; color:red;font-size:x-large;margin-left:4%;"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
