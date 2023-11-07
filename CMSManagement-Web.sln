@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSManagement-Web", "CMSManagement-Web\CMSManagement-Web.csproj", "{835CA226-3F07-4B0F-B448-96A5661D6B1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSManagement-Web", "CMSManagement-Web\CMSManagement-Web.csproj", "{835CA226-3F07-4B0F-B448-96A5661D6B1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSManagement-API", "CMSManagement-API\CMSManagement-API.csproj", "{B7B0AC55-7D38-401E-9B0B-6C01DBAC1B0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSManagement-API", "CMSManagement-API\CMSManagement-API.csproj", "{B7B0AC55-7D38-401E-9B0B-6C01DBAC1B0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

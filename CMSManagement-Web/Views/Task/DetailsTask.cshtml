@@ -1,0 +1,97 @@
+﻿@model CMSManagement_Web.Models.Taskdetails
+
+@{
+    ViewData["Title"] = "DetailsTask";
+}
+<link href="~/css/task.css" rel="stylesheet" />
+
+<section class="card mt-5">
+    <div class="container-fluid h-custom d-flex justify-content-center">
+        <div class="row col-md-8 event">
+            <h3 class="d-flex justify-content-center mb-4 mt-4 text-danger">Task Details</h3>
+            <dl class="row d-flex justify-content-center">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+                <dd class="col-sm-10">
+                    @{
+                        string[] imageList = Model.Image.Split(", ");
+                        foreach (var file in imageList)
+                        {
+                            <img src="data:image/jpg;base64,@file" height="200" width="400" />
+                        }
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Video)
+                </dt>
+                <dd class="col-sm-10">
+                    <video controls height="200" width="400">
+                        <source src="data:video/mp4;base64,@Model.Video" type="video/mp4">
+                    </video>
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Estimatedtime)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Estimatedtime)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Comment)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Comment)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.TaskStatus)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.TaskStatus == 1)
+                    {
+                        <span>Creating </span>
+                    }
+                    else if (Model.TaskStatus == 2)
+                    {
+                        <span>Open</span>
+                    }
+                    else if (Model.TaskStatus == 3)
+                    {
+                        <span>Working</span>
+                    }
+                    else if (Model.TaskStatus == 4)
+                    {
+                        <span>Developer Done</span>
+                    }
+                    else if (Model.TaskStatus == 5)
+                    {
+                        <span>Testing Done</span>
+                    }
+                    else if (Model.TaskStatus == 6)
+                    {
+                        <span>Re-Open</span>
+                    }
+                    else if (Model.TaskStatus == 7)
+                    {
+                        <span>Tested</span>
+                    }
+                </dd>
+            </dl>
+            <div class="d-flex justify-content-center mt-2 mb-4">
+                <a asp-action="TaskList" asp-controller="Task" id="btnBack" class="btn btn-secondary btnBack">Go Back</a>
+                <a asp-action="UpdateTask" asp-controller="Task" id="btnEdit" asp-route-id="@Model.Task_Id" class="btn btn-primary btnUpdate">Edit</a>
+            </div>
+        </div>
+    </div>
+</section>
