@@ -146,5 +146,35 @@ namespace CMSManagement_Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        public async Task<IActionResult> Index()
+        {
+
+            IEnumerable<Employee> employees = null;
+            using (var client = new HttpClient())
+            {
+
+                HttpResponseMessage response = await _client.GetAsync("Employee/GetAllEmployee");
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var readTask = response.Content.ReadAsStringAsync().Result;
+                    List<Employee> deptObj = JsonConvert.DeserializeObject<List<Employee>>(readTask);
+
+
+                    return Ok(deptObj);
+                    //return Ok(deptObj);
+                }
+                else
+                {
+                    employees = Enumerable.Empty<Employee>();
+
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                    return BadRequest();
+                }
+            }
+        }
+
     }
 }

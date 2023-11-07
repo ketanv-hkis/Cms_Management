@@ -11,5 +11,9 @@ namespace CMSManagement_API.Repository
         void SaveTeamLanguage(Team team);
 
         void SaveTeamAssign(TeamAssign teamAssign);
+
+        List<TeamAssign> GetTeamAssign(int TeamAssignId);
+
+        void UpdateTeamAssign(TeamAssign teamAssign);
     }
 }

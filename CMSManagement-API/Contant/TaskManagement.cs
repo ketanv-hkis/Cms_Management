@@ -15,10 +15,9 @@
         
         public readonly string SaveTeamAssign = "saveTeamAssign";
 
+        public readonly string GetTeamAssign = "SP_getTeamAssign";
 
-
-
-
+        public readonly string UpdateTeamAssign = "saveTeamAssign";
 
 
     }

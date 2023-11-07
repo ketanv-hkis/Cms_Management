@@ -54,6 +54,7 @@ namespace CMSManagement_API.Repository
 
         {
             var parameter = new DynamicParameters();
+            parameter.Add("@TeamAssignId", teamAssign.TeamAssignId, DbType.Int64, ParameterDirection.Input);
             parameter.Add("@TeamId", teamAssign.TeamId, DbType.Int64, ParameterDirection.Input);
             parameter.Add("@EmpId", teamAssign.EmpId, DbType.String, ParameterDirection.Input);
             parameter.Add("@Created_by", teamAssign.Created_by, DbType.Int16, ParameterDirection.Input);
@@ -65,6 +66,32 @@ namespace CMSManagement_API.Repository
 
         }
 
+        public List<TeamAssign> GetTeamAssign(int TeamAssignId)
+        {
+
+            var parameter = new DynamicParameters();
+            parameter.Add("@TeamAssignId", TeamAssignId, DbType.Int16, ParameterDirection.Input);
+            using (IDbConnection connection = GetDbConnection())
+            {
+                List<TeamAssign> TeamAssigns = SqlMapper.Query<TeamAssign>(connection, taskManagement.GetTeamAssign, parameter, commandType: CommandType.StoredProcedure).ToList();
+                return TeamAssigns;
+            }
+        }
+
+        public void UpdateTeamAssign(TeamAssign teamAssign)
+        {
+            var parameter = new DynamicParameters();
+
+            parameter.Add("@TeamAssignId", teamAssign.TeamAssignId, DbType.Int64, ParameterDirection.Input);
+            parameter.Add("@TeamId", teamAssign.TeamId, DbType.Int64, ParameterDirection.Input);
+            parameter.Add("@EmpId", teamAssign.EmpId, DbType.String, ParameterDirection.Input);
+            parameter.Add("@Modified_by", teamAssign.Modified_by, DbType.Int16, ParameterDirection.Input);
+            using (IDbConnection connection = GetDbConnection())
+            {
+                SqlMapper.Query(connection, taskManagement.UpdateTeamAssign, parameter, commandType: CommandType.StoredProcedure);
+            }
 
         }
+
+    }
 }

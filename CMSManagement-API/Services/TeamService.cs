@@ -30,6 +30,17 @@ namespace CMSManagement_API.Services
             _teamRepository.SaveTeamAssign(teamAssign);
         }
 
+        public List<TeamAssign> GetTeamAssign(int TeamAssignId)
+        {
+            List<TeamAssign> teamAssigns = _teamRepository.GetTeamAssign(TeamAssignId);
+            return teamAssigns;
+        }
+
+        public void UpdateTeamAssign(TeamAssign teamAssign)
+        {
+            _teamRepository.SaveTeamAssign(teamAssign);
+        }
+
 
     }
 }

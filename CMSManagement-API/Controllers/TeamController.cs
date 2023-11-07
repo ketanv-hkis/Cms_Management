@@ -62,8 +62,35 @@ namespace CMSManagement_API.Controllers
                 return BadRequest(e.Message);
             }
 
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> GetTeamAssign(int TeamAssignId)
+        {
+            try
+            {
+                var list = _service.GetTeamAssign(TeamAssignId);
+                return Ok(list);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateTeamAssign([FromQuery] TeamAssign teamAssign)
+        {
+            try
+            {
+                _service.UpdateTeamAssign(teamAssign);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

@@ -30,11 +30,13 @@
 #empData {
     padding-top: 51px;
     margin-left: 100px;
+    padding: 20px;
 }
 
 #btnSaveEmp {
     margin-left: 100px;
     margin-top: 32px;
+    margin-left: 10px;
 }
 
 .emp_Checkbox {
@@ -43,4 +45,12 @@
 
 .emp_Name {
     padding: 7px;
+}
+
+.container {
+    padding-top: 17px;
+}
+
+.card {
+    width: 350px;
 }
