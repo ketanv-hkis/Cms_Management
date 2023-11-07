@@ -15,6 +15,8 @@ builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<ITeamService, TeamService>();
 builder.Services.AddTransient<ITeamRepository, TeamRepository>();
+builder.Services.AddTransient<ITaskService, TaskService>();
+builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

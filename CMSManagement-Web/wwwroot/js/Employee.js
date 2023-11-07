@@ -1,4 +1,13 @@
-﻿function LoginUser() {
+﻿
+function onEnter()
+{
+    if (event.keyCode === 13) {
+        LoginUser();
+    }
+}
+
+
+function LoginUser() {
     var email = $('#txtEmail').val();
     var password = $('#txtPassword').val();
 
@@ -9,15 +18,72 @@
             data: { Email: email, Password: password },
             success: function (result) {
                 if (result != undefined) {
-                    alert("login successfully");
-                    window.location.href = "/Home/Index";
+                    Swal.fire({
+                        title: 'Success!',
+                        text: "Login SuccessFully!",
+                        icon: 'success',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/employee/employeelist";
+                        }
+                    });
                 } else {
-                    alert("login Failed");
+                    Swal.fire(
+                        'Opps',
+                        'Something went wrong!',
+                        'error'
+                    )
                 }
             }
         });
     }
     else {
-        alert("Please enter email and password");
+        Swal.fire(
+            'Failed!',
+            'Please Enter Email and Password.',
+            'error'
+        );
+    }
+}
+
+
+function DeleteEmployee(Id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/Employee/EmployeeDelete',
+                type: 'POST',
+                data: { Id: Id },
+                success: function (data) {
+                    if (data == "success") {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your employee has been deleted.',
+                            'success'
+                        );
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+    });
+}
+
+
+function SelectedChange() {
+    var selectedRole = document.getElementById('ddRole').value;
+    if (selectedRole == -1) {
+        document.getElementById('error-message').style.display = "block";
+    }
+    else {
+        document.getElementById('error-message').style.display = "none";
     }
 }

@@ -1,0 +1,67 @@
+﻿.employee {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    margin-top: 3%;
+    padding: 3%;
+}
+
+.employee-left {
+    text-align: center;
+    color: #fff;
+    margin-top: 7%;
+}
+
+.employee-left input {
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+
+.employee-right {
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+
+.employee-left p {
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+
+.employee .employee-form {
+    padding: 10%;
+    margin-top: 10%;
+}
+
+.btnEmployee {
+    margin-top: 10%;
+    margin-left: 3%;
+    border: none;
+    border-radius: 1.5rem;
+    background: #0062cc;
+    color: #fff;
+    width: 30%;
+    cursor: pointer;
+}
+
+
+.btnBack {
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    width: 30%;
+}
+
+.employee-heading {
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}

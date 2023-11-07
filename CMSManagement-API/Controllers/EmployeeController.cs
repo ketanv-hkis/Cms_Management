@@ -1,8 +1,11 @@
 ﻿using CMSManagement_API.Models;
 using CMSManagement_API.Services;
+using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,26 +24,21 @@ namespace CMSManagement_API.Controllers
             _employeeService = employeeService;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(Login login)
         {
             try
             {
-                var list = _employeeService.Login(login.Email, login.Password);
-
-                string base64EncodedPassword = list.Password;
-                byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
-                string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
-                list.Password = decodedPassword;
+                var list = _employeeService.Login(login);
 
                 if (list != null)
                 {
+                    string base64EncodedPassword = list.Password;
+                    byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
+                    string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
+                    list.Password = decodedPassword;
+
                     var token = GenerateJSONWebToken(login);
                     var id = list.Id;
                     var role = list.Role;
@@ -51,7 +49,6 @@ namespace CMSManagement_API.Controllers
                         Role= role,
                         Token = token
                     };
-
                     return Ok(response);
                 }
                 else
@@ -65,6 +62,112 @@ namespace CMSManagement_API.Controllers
             }
 
         }
+
+        [HttpGet]
+        public IActionResult GetAllEmployee()
+        {
+            try
+            {
+                var list = _employeeService.GetAllEmployee();
+
+                foreach(var item in list)
+                {
+                    string base64EncodedPassword = item.Password;
+                    byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
+                    string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
+                    item.Password = decodedPassword;
+                }
+                
+                return Ok(list);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult GetUserById(int id)
+        {
+            try
+            {
+                var list = _employeeService.GetUserById(id);
+
+                if (list != null)
+                {
+
+                    string base64EncodedPassword = list.Password;
+                    byte[] encodedBytes = Convert.FromBase64String(base64EncodedPassword);
+                    string decodedPassword = Encoding.UTF8.GetString(encodedBytes);
+                    list.Password = decodedPassword;
+                }
+
+                return Ok(list);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> SaveEmployee(Employee employee)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                _employeeService.SaveEmployeeDetail(employee);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateEmployee(Employee employee)
+        {
+            try
+            {
+                _employeeService.UpdateEmployeeDetail(employee);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            try
+            {
+                if (id != 0)
+                {
+                    bool deleted = _employeeService.DeleteEmployeeDetail(id);
+                    return Ok(deleted);
+                }
+                else 
+                { 
+                    return BadRequest(false); 
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
 
         private string GenerateJSONWebToken(Login login)
         {
@@ -85,36 +188,5 @@ namespace CMSManagement_API.Controllers
             var token = tokenHandler.CreateToken(tokenDescription);
             return tokenHandler.WriteToken(token);
         }
-
-
-        [HttpGet]
-        public async Task<IActionResult> GetEmployeeDetail(int Id)
-        {
-            try
-            {
-                var list = _employeeService.GetEmployeeDetail(Id);
-                return Ok(list);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-
-        }
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> GetEmployee()
-        {
-            try
-            {
-                var list = _employeeService.GetEmployee();
-                return Ok(list);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
     }
 }
