@@ -20,7 +20,10 @@
                             'Your employee has been deleted.',
                             'success'
                         );
-                        window.location.reload();
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000)
+                        
                     }
                 }
             })

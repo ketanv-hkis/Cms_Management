@@ -52,6 +52,7 @@ namespace CMSManagement_API.Repository
                 taskdetails.Video = videoPath;
 
             }
+            parameter.Add("@Task_Id", 0, DbType.Int32, ParameterDirection.Input);
             parameter.Add("@Name", taskdetails.Name, DbType.String, ParameterDirection.Input);
             parameter.Add("@Description", taskdetails.Description, DbType.String, ParameterDirection.Input);
             parameter.Add("@Image", taskdetails.Image, DbType.String, ParameterDirection.Input);
@@ -63,7 +64,7 @@ namespace CMSManagement_API.Repository
 
             using (IDbConnection connection = GetDbConnection())
             {
-                SqlMapper.Query(connection, "sp_addtask", parameter, commandType: CommandType.StoredProcedure);
+                SqlMapper.Query(connection, "SP_AddUpdateTask", parameter, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -114,10 +115,10 @@ namespace CMSManagement_API.Repository
             parameter.Add("@Estimatedtime", taskdetails.Estimatedtime, DbType.DateTime, ParameterDirection.Input);
             parameter.Add("@Comment", taskdetails.Comment, DbType.String, ParameterDirection.Input);
             parameter.Add("@TaskStatus", taskdetails.TaskStatus, DbType.Int32, ParameterDirection.Input);
-            parameter.Add("@Modified_by", taskdetails.Modified_by, DbType.Int32, ParameterDirection.Input);
+            parameter.Add("@Created_by", taskdetails.Modified_by, DbType.Int32, ParameterDirection.Input);
             using (IDbConnection connection = GetDbConnection())
             {
-                SqlMapper.Query(connection, "sp_UpdateTask", parameter, commandType: CommandType.StoredProcedure);
+                SqlMapper.Query(connection, "SP_AddUpdateTask", parameter, commandType: CommandType.StoredProcedure);
             }
         }
 

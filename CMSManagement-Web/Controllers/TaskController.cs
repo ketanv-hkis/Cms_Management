@@ -81,12 +81,14 @@ namespace CMSManagement_Web.Controllers
                     taskdetails.Video = videoByte;
                 }
 
+                taskdetails.Created_by = Convert.ToInt32(HttpContext.Session.GetString("Id"));
+
                 HttpResponseMessage response = await _client.PostAsJsonAsync<Taskdetails>("TaskApi/TaskAdd", taskdetails);
 
                 if (response.IsSuccessStatusCode)
                 {
                     ViewBag.Message = "Task Create Successfully";
-                    return View();
+                    return RedirectToAction("TaskList");
                 }
             }
             catch (Exception ex)
@@ -163,7 +165,7 @@ namespace CMSManagement_Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         string responseAsString = response.Content.ReadAsStringAsync().Result;
-                        return Json("success");
+                        return Ok("success");
                     }
                 }
                 return Ok(null);
