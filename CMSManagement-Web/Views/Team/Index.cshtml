@@ -3,39 +3,49 @@
 <script src="~/js/employeeDetail.js"></script>
 
 
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Team Assign";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form>
-    <div class="row">
-        <div class="col">
-            <div class="dropdown">
+<div class="text-bg-dark d-flex" style="align-items:center;">
+    <img src="~/images/team.png" style="height:100px;" />
+    <h2>Team Assign</h2>
+</div>
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <div class="dropdown">
 
-                @Html.DropDownList("Team", (List<SelectListItem>)ViewData["teams"],new { @class="form-select", onchange = "SelectedIndexChanged(this.value)"})
+                    @Html.DropDownList("Team", (List<SelectListItem>)ViewData["teams"], new { @class = "form-select", onchange = "SelectedIndexChanged(this.value)" })
 
-                <input type="text" name="Addteam" id="textaddteam" class="form-control text hide" />
+                    <input type="text" name="Addteam" id="textaddteam" class="form-control text hide" />
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4">
+                <button type="button" id="btnplus" class="btn btn-primary" onclick="hideShow()"> + </button>
+                <button type="button" id="btnsave" class="btn btn-primary hide" onclick="getEmployeeList()"> Save </button>
             </div>
         </div>
 
-        <div class="col">
-            <button type="button" id="btnplus" class="btn btn-primary" onclick="hideShow()"> + </button>
-            <button type="button" id="btnsave" class="btn btn-primary hide" onclick="getEmployeeList()"> Save </button>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="card">
-            <div id="empData" class="d-flex justify-content-center">
-                
+        <div class="row mt-2 mb-3">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="empData" class="d-flex justify-content-center">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <button type="button" id="btnSaveEmp" onclick="saveEmpData()" class="btn btn-primary hide">Save</button>
-
-</form>
+        <div class="row">
+            <div class="col">
+                <button type="button" id="btnSaveEmp" onclick="saveEmpData()" class="btn btn-primary hide">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 

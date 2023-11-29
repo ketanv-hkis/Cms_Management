@@ -5,9 +5,9 @@ var TeamAssignId = 0;
 function hideShow() {
 
     $("#btnplus").hide();
-    $("#btnsave").show();
+    $("#btnsave").removeClass('hide');
     $("#Team").hide();
-    $("#textaddteam").show();
+    $("#textaddteam").removeClass('hide');
     $("#empData").hide();
     $("#btnSaveEmp").hide();
 

@@ -10,17 +10,17 @@
     width: 230px;
 }
 
-#btnplus {
+/*#btnplus {
     margin-left: -411px;
-}
+}*/
 
 .hide {
     display: none;
 }
 
-#btnsave {
+/*#btnsave {
     margin-left: -362px;
-}
+}*/
 
 #textaddteam {
     height: 36px;
@@ -34,9 +34,9 @@
 }
 
 #btnSaveEmp {
-    margin-left: 100px;
-    margin-top: 32px;
-    margin-left: 10px;
+    /*margin-top: 20px;*/
+    /*margin-left: 10px;*/
+    margin-bottom: 20px;
 }
 
 .emp_Checkbox {
@@ -51,6 +51,6 @@
     padding-top: 17px;
 }
 
-.card {
+/*.card {
     width: 350px;
-}
+}*/
