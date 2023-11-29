@@ -12,9 +12,9 @@ namespace CMSManagement_API.Services
             _employeeRepository = employeeRepository;
         }
 
-        public Employee Login(string email, string password)
+        public Employee Login(Login login)
         {
-            Employee EmployeeDetails = _employeeRepository.Login(email, password);
+            Employee EmployeeDetails = _employeeRepository.Login(login);
             if (EmployeeDetails != null)
             {
                 return EmployeeDetails;
@@ -25,16 +25,35 @@ namespace CMSManagement_API.Services
             }
         }
 
-        public List<Employee> GetEmployeeDetail(int Id)
+        public Employee GetUserById(int id)
         {
-            List<Employee> getEmployee = _employeeRepository.GetEmployeeDetail(Id);
-            return getEmployee;
+            Employee employeeDetail = _employeeRepository.GetUserById(id);
+            return employeeDetail;
         }
 
-        public List<Employee> GetEmployee()
+
+        public IEnumerable<Employee> GetAllEmployee()
         {
-            List<Employee> employees = _employeeRepository.GetEmployee();
-            return employees;
+            return _employeeRepository.GetAllEmployee();
         }
+
+
+        public void SaveEmployeeDetail(Employee employee)
+        {
+            _employeeRepository.SaveEmployeeDetail(employee);
+        }
+
+
+        public void UpdateEmployeeDetail(Employee employee)
+        {
+            _employeeRepository.UpdateEmployeeDetail(employee);
+        }
+
+        public bool DeleteEmployeeDetail(int Id)
+        {
+            bool deleted = _employeeRepository.DeleteEmployeeDetail(Id);
+            return deleted;
+        }
+
     }
 }

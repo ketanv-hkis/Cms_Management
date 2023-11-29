@@ -1,5 +1,4 @@
 ﻿using CMSManagement_Web.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,21 +18,7 @@ namespace CMSManagement_Web.Controllers
 
         public IActionResult Index()
         {
-            string session = HttpContext.Session.GetString("Id");
-            ViewBag.response = (session);
             return View();
-        }
-
-        public async Task<IActionResult> sessionId()
-        {
-            try {
-                HttpContext.Session.SetInt32("IsAdmin",0);
-                var isAdmin = HttpContext.Session.GetInt32("IsAdmin");
-
-                return Ok(isAdmin);
-            }
-            catch(Exception e) { return BadRequest(e); }
-            
         }
 
         public IActionResult Login()
@@ -42,20 +27,20 @@ namespace CMSManagement_Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(Login login)
+        public async Task<IActionResult> Login(Login login)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     client.BaseAddress = new Uri("https://localhost:7053/api/Employee/");
-                    var response = client.PostAsJsonAsync<Login>("Login", login).Result;
+                    var response = await client.PostAsJsonAsync<Login>("Login", login);
 
                     if (response.IsSuccessStatusCode)
                     {
                         string responseAsString = response.Content.ReadAsStringAsync().Result;
 
-                        if (responseAsString != "")
+                        if (responseAsString != null)
                         {
 
                             JObject json = JObject.Parse(responseAsString);
@@ -63,7 +48,6 @@ namespace CMSManagement_Web.Controllers
                             int role = (int)json["role"];
                             string token = (string)json["token"];
 
-                            //HttpContext.Session.SetString("Id", responseAsString);
                             HttpContext.Session.SetString("Id", id.ToString());
                             HttpContext.Session.SetString("Role", role.ToString());
                             HttpContext.Session.SetString("Token", token);
@@ -85,15 +69,32 @@ namespace CMSManagement_Web.Controllers
             return Ok(null);
         }
 
-        public IActionResult Admin()
+
+        [HttpGet]
+        public async Task<IActionResult> Authentication()
         {
-            return View("~/Views/Admin/Index.cshtml");
+            return Json(HttpContext.Session.GetString("Token"));
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        [Authentication]
+        public async Task<IActionResult> Logout()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            try
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Home");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
     }
 }
